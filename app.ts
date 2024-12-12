@@ -5,6 +5,11 @@ import { PrismaClient } from "@prisma/client";
 import session from "express-session";
 import passport from "./passport";
 import { hashPassword } from "./bcrypt";
+import hello from "./routers/hello";
+import logout from "./routers/logout";
+import create from "./routers/create";
+import login from "./routers/login";
+import home from "./routers/home";
 
 dotenv.config();
 
@@ -27,40 +32,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.post("/create", async (req: any, res: any) => {
-  const { email, password } = req.body;
+app.use("/hello", hello);
+app.use("/logout", logout);
+app.use("/create", create);
+app.use("/login", login);
+app.use("/home", home);
 
-  if (!email || !password) {
-    return res.status(400).send("Email and password are required");
-  }
 
-  try {
-    const existingUser = await prisma.user.findUnique({ where: { email } });
-
-    if (existingUser) {
-      return res.status(400).send("User already exists");
-    }
-
-    const hashedPassword = await hashPassword(password);
-    const newUser = await prisma.user.create({
-      data: { email, password: hashedPassword },
-    });
-
-    res.status(201).json(newUser);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("An error occurred while creating the user");
-  }
-});
-
-app.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/home",
-    failureRedirect: "/login",
-  }
-)
-);
 
 app.get("/home", (req: Request, res: Response) => {
   if (req.isAuthenticated()) {
@@ -70,14 +48,7 @@ app.get("/home", (req: Request, res: Response) => {
   }
 });
 
-app.get("/logout", (req: Request, res: Response) => {
-  req.logout((err) => {
-    if (err) {
-      return res.status(500).send("Error logging out");
-    }
-    res.redirect("/login");
-  });
-});
+
 
 // Start the server
 app.listen(PORT, () => {
