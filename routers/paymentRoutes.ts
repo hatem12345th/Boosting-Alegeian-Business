@@ -11,6 +11,9 @@ const SATIM_API_KEY = process.env.SATIM_API_KEY;  // API Key from SATIM
 
 // POST /payment/process: Processes a payment
 router.post("/process", async (req: any, res: any) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }else{
   const { userID, amount, currency } = req.body;
 
   if (!userID || !amount || !currency) {
@@ -52,7 +55,7 @@ router.post("/process", async (req: any, res: any) => {
     console.error("Error processing payment:", error);
     res.status(500).json({ error: "Payment processing failed." });
   }
-});
+}});
 
 // GET /payment/invoice/:paymentID: Generates an invoice for a payment
 router.get("/invoice/:paymentID", async (req: any, res: any) => {

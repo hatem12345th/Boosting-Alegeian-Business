@@ -4,7 +4,11 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 const router = Router();
 
-router.put("/profile/:id", async (req, res) => {
+router.put("/profile/:id", async (req:any, res:any) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+  else{
   const { id } = req.params;
   const { username, email, role } = req.body;
 
@@ -18,6 +22,6 @@ router.put("/profile/:id", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Error updating profile", error });
   }
-});
+}});
 
 export default router;

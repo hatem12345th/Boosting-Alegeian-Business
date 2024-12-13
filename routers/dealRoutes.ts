@@ -6,6 +6,9 @@ const router = Router();
 
 // POST /deal/create: Creates a new deal
 router.post("/create", async (req: any, res: any) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }else{
   const { problemID, solutionProviderID, status } = req.body;
 
   if (!problemID || !solutionProviderID || !status) {
@@ -30,36 +33,41 @@ router.post("/create", async (req: any, res: any) => {
     console.error("Error creating deal:", error);
     res.status(500).json({ message: "Error creating deal."});
   }
-});
+}});
 
 // PUT /deal/update/:dealID: Updates an existing deal
 router.put("/update/:dealID", async (req: any, res: any) => {
-  const { dealID } = req.params;
-  const { status } = req.body;
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ message: "Unauthorized" });
+ }else{ const { dealID } = req.params;
+ const { status } = req.body;
 
-  if (!dealID || !status) {
-    return res.status(400).json({ message: "dealID and status are required." });
-  }
+ if (!dealID || !status) {
+   return res.status(400).json({ message: "dealID and status are required." });
+ }
 
-  try {
-    const updatedDeal = await prisma.deal.update({
-      where: { dealID: parseInt(dealID) },
-      data: { status },
-      include: {
-        problem: true,
-        solutionProvider: true,
-      },
-    });
+ try {
+   const updatedDeal = await prisma.deal.update({
+     where: { dealID: parseInt(dealID) },
+     data: { status },
+     include: {
+       problem: true,
+       solutionProvider: true,
+     },
+   });
 
-    res.status(200).json({ message: "Deal updated successfully.", updatedDeal });
-  } catch (error) {
-    console.error("Error updating deal:", error);
-    res.status(500).json({ message: "Error updating deal." });
-  }
-});
+   res.status(200).json({ message: "Deal updated successfully.", updatedDeal });
+ } catch (error) {
+   console.error("Error updating deal:", error);
+   res.status(500).json({ message: "Error updating deal." });
+ }
+}}
+  );
 
 // GET /deal/:dealID: Retrieves the details of a specific deal
 router.get("/:dealID", async (req: any, res: any) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ message: "Unauthorized" });}else{
   const { dealID } = req.params;
 
   try {
@@ -84,10 +92,13 @@ router.get("/:dealID", async (req: any, res: any) => {
     console.error("Error fetching deal:", error);
     res.status(500).json({ message: "Error fetching deal." });
   }
-});
+}});
 
 // GET /deal: Retrieves a list of all deals
-router.get("/", async (_req: Request, res: Response) => {
+router.get("/", async (req: any, res: any) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }else{
   try {
     const deals = await prisma.deal.findMany({
       include: {
@@ -105,6 +116,6 @@ router.get("/", async (_req: Request, res: Response) => {
     console.error("Error fetching deals:", error);
     res.status(500).json({ message: "Error fetching deals."});
   }
-});
+}});
 
 export default router;
