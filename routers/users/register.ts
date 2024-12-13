@@ -6,7 +6,7 @@ import { hashPassword } from "../../utilities/bcrypt";
 const prisma = new PrismaClient();
 const router = Router();
 
-router.post("/users", async (req: any, res: any) => {
+router.post("/register", async (req: any, res: any) => {
   const { username, email, password, role } = req.body;
 
   if (!username || !email || !password || !role) {

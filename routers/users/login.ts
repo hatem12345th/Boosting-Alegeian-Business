@@ -4,6 +4,7 @@ import passport from "passport";
 const router = Router();
 
 router.post("/login", (req, res, next) => {
+  console.log("Login route hit");
   passport.authenticate("local", (err:any, user:any, info:any) => {
     if (err) return next(err);
     if (!user) return res.status(401).json({ message: "Invalid credentials" });

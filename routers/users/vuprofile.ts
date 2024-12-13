@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 const router = Router();
 
-router.get("/users", async (req:any, res:any) => {
+router.get("/profile/:id", async (req:any, res:any) => {
   const { id } = req.params;
 
   try {

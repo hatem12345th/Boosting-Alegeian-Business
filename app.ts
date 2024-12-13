@@ -7,8 +7,14 @@ import passport from "./passport";
 import { hashPassword } from "./utilities/bcrypt";
 import register from "./routers/users/register";
 import login from "./routers/users/login";
-import profile from "./routers/users/profile";
+import vuprofile from "./routers/users/vuprofile";
+import uprofile from "./routers/users/uprofile";
+import resetpassword from "./routers/users/reset-password";
 import logout from "./routers/users/logout";
+import verifyemail from "./routers/users/verifyemail";
+import { verify } from "crypto";
+import problemRoutes from "./routers/problems/problemroutes";
+import solutionProviderRoutes from "./routers/solutionProviderRoutes";
 
 
 dotenv.config();
@@ -32,11 +38,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use("/register", register);
+app.use("/users", register);
 app.use("/users", login);
-app.use("/profile/:id", profile);
-app.use("/logout", logout);
-
+app.use("/users", vuprofile);
+app.use("/users", logout);
+app.use("/users", uprofile);
+app.use("/users", resetpassword);
+app.use("/users", verifyemail);
+app.use("/problem", problemRoutes);
+app.use("/providers", solutionProviderRoutes);
 
 
 
