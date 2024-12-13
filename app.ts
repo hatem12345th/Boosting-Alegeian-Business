@@ -14,6 +14,8 @@ import problemRoutes from "./routers/problems/problemroutes";
 import solutionProviderRoutes from "./routers/solutionProviderRoutes";
 import proposalRoutes from "./routers/proposalRoutes";
 import paymentRoutes from "./routers/paymentRoutes";
+import cors from "cors";
+
 
 
 dotenv.config();
@@ -36,6 +38,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(cors({ origin: 'http://localhost:3000/' }));
 // Routes
 app.use("/users", register);
 app.use("/users", login);
