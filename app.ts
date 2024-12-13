@@ -1,10 +1,8 @@
 import express, { Application } from "express";
-import { Request, Response } from "express";
 import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
 import session from "express-session";
 import passport from "./passport";
-import { hashPassword } from "./utilities/bcrypt";
 import register from "./routers/users/register";
 import login from "./routers/users/login";
 import vuprofile from "./routers/users/vuprofile";
@@ -12,9 +10,10 @@ import uprofile from "./routers/users/uprofile";
 import resetpassword from "./routers/users/reset-password";
 import logout from "./routers/users/logout";
 import verifyemail from "./routers/users/verifyemail";
-import { verify } from "crypto";
 import problemRoutes from "./routers/problems/problemroutes";
 import solutionProviderRoutes from "./routers/solutionProviderRoutes";
+import proposalRoutes from "./routers/proposalRoutes";
+import paymentRoutes from "./routers/paymentRoutes";
 
 
 dotenv.config();
@@ -47,6 +46,8 @@ app.use("/users", resetpassword);
 app.use("/users", verifyemail);
 app.use("/problem", problemRoutes);
 app.use("/providers", solutionProviderRoutes);
+app.use("/proposal", proposalRoutes);
+app.use("/payment", paymentRoutes);
 
 
 
