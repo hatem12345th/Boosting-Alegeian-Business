@@ -1,8 +1,9 @@
-import { AIProblemSolver } from '@/components/ai-problem-solver';
-import { FilterSidebar } from '@/components/filer-sidebar';
-import { ProblemCard } from '@/components/problem-card';
-import { StatesDemo } from '@/components/StatesDemo';
-import React from 'react';
+"use client"
+
+
+import { Button } from '@/components/ui/button';
+import {  CirclePlus, Grid3x3, LayoutGrid } from 'lucide-react';
+import { useState } from 'react';
 
 const data = [
   {
@@ -53,17 +54,34 @@ const data = [
 ];
 
 const Customer = () => {
+  const [tab,setTab] = useState(false);
+  
+ 
+ 
   return (
     <main className="w-full flex flex-col items-center p-6 ">
       {/* Main Header */}
-      <h1 className="font-semibold text-primary text-2xl py-4">Discover Solutions</h1>
+      <h1 className="font-semibold w-full px-36 text-primary text-2xl py-4 flex justify-between  "  
+       > 
+        Problems 
+        <span className='flex gap-1'>
+        {!tab ? ( <Button variant="outline"  onClick={() => setTab(!tab)}>    <Grid3x3 />  </Button>) :( <Button  onClick={() => setTab(!tab)}>      <Grid3x3 />  </Button> ) }  
+        {tab ? ( <Button variant="outline" onClick={() => setTab(!tab)} >    <LayoutGrid />  </Button>) :( <Button onClick={() => setTab(!tab)} >    <LayoutGrid /> </Button> ) } 
+        <Button className="">  <CirclePlus /> New Problem </Button>
 
+        </span>
+
+
+     
+
+      </h1>
+     
       {/* Cards Container */}
       <div className="flex flex-wrap gap-6 justify-center">
         {data?.map((item, index) => (
           <div
             key={index}
-            className="flex flex-col bg-card shadow-lg rounded-lg p-4 w-[300px] hover:shadow-xl transition-shadow duration-200"
+            className={`flex flex-col bg-card shadow-lg rounded-lg p-4 ${tab ? "w-[800px]":"w-[600px]" }  hover:shadow-xl transition-shadow duration-200`}
           >
             <h2 className="font-semibold text-lg mb-2 text-card-foreground">{item.title}</h2>
             <p className="text-muted-foreground text-sm mb-4">{item.description}</p>
