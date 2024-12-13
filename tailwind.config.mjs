@@ -10,9 +10,10 @@ export default {
   	extend: {
   		colors: {
 			dark:{
-				1:'#1C1F2E',
-
+				1:'#18181B',
+				2:'#09090B',	
 			},
+			'ring-80': 'var(--color-ring-80, #18181BCC)',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

@@ -77,3 +77,10 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+.Bg{
+  background-image:url("../../public/images/business-people-shaking-hands-meeting-room.webp");
+  background-position: center;
+
+}
