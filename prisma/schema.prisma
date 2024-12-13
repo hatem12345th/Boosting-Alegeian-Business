@@ -78,6 +78,7 @@ model Payment {
   status    String
   user      user   @relation("UserPayments", fields: [userID], references: [userID])
   deals     Deal[] @relation("PaymentDeals")
+  transactionID String
 }
 
 model Notification {
