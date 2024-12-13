@@ -1,8 +1,8 @@
-
+/*
 import { Router, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 // @ts-ignore
-import chargily, { Invoice, Mode } from "chargily-epay-js";
+import * as chargily from 'chargily-epay-js';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -97,3 +97,4 @@ router.get("/invoice/:paymentID", async (req: any, res: any) => {
 });
 
 export default router;
+*/
