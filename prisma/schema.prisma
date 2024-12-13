@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,70 +7,74 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model User {
-  userID      Int        @id @default(autoincrement())
-  username    String     @unique
-  email       String     @unique
-  role        String
-  passwordHash String
-  problems    Problem[]  @relation("UserProblems")  
-  proposals   Proposal[] @relation("UserProposals")
-  payments    Payment[]  @relation("UserPayments")
+  userID        Int            @id @default(autoincrement())
+  username      String         @unique
+  email         String         @unique
+  role          String
+  passwordHash  String
+  problems      Problem[]      @relation("UserProblems")
+  proposals     Proposal[]     @relation("UserProposals")
+  payments      Payment[]      @relation("UserPayments")
   notifications Notification[]
-  messages    Message[]  @relation("UserMessages")
-  deals       Deal[]     @relation("UserDeals")
+  messages      Message[]      @relation("UserMessages")
+  deals         Deal[]         @relation("UserDeals")
 }
 
 model Problem {
-  problemID   Int        @id @default(autoincrement())
-  title       String
-  description String
-  category    String
-  budget      Float
-  status      String
-  attachments String?    // File paths or URLs to attachments
-  userID      Int
-  user        User       @relation("UserProblems", fields: [userID], references: [userID])
-  proposals   Proposal[]
+  problemID     Int            @id @default(autoincrement())
+  title         String
+  description   String
+  category      String
+  budget        Float
+  status        String
+  attachments   String? // File paths or URLs to attachments
+  userID        Int
+  user          User           @relation("UserProblems", fields: [userID], references: [userID])
+  proposals     Proposal[]
   notifications Notification[]
-  dealID       Int?
-  deal         Deal?
+  dealID        Int?
+  deal          Deal?
 }
 
 model SolutionProvider {
-  providerID  Int        @id @default(autoincrement())
-  name        String
-  description String
-  expertise   String
-  portfolio   String
-  rating      Float
-  proposals   Proposal[] @relation("ProviderProposals")
-  messages    Message[]  @relation("ProviderMessages")
-  deals       Deal[]
+  providerID       Int        @id @default(autoincrement())
+  name             String
+  description      String
+  expertise        String
+  portfolio        String
+  rating           Float
+  problemAlignment String
+  technologiesUsed String
+  teamExperience   String
+  teamNumber       Int
+  createdDate      DateTime
+  startReview      Float
+  proposals        Proposal[] @relation("ProviderProposals")
+  messages         Message[]  @relation("ProviderMessages")
+  deals            Deal[]
 }
 
 model Proposal {
-  proposalID  Int      @id @default(autoincrement())
-  userID      Int
-  problemID   Int      @unique
-  details     String
-  financialOffer Float
-  user        User     @relation("UserProposals", fields: [userID], references: [userID])
-  problem     Problem  @relation(fields: [problemID], references: [problemID])
+  proposalID         Int              @id @default(autoincrement())
+  userID             Int
+  problemID          Int              @unique
+  details            String
+  financialOffer     Float
+  user               User             @relation("UserProposals", fields: [userID], references: [userID])
+  problem            Problem          @relation(fields: [problemID], references: [problemID])
   solutionProviderID Int
-  solutionProvider SolutionProvider @relation("ProviderProposals", fields: [solutionProviderID], references: [providerID])
+  solutionProvider   SolutionProvider @relation("ProviderProposals", fields: [solutionProviderID], references: [providerID])
 }
 
 model Payment {
-  paymentID   Int      @id @default(autoincrement())
-  userID      Int
-  amount      Float
-  currency    String
-  status      String
-  user        User     @relation("UserPayments", fields: [userID], references: [userID])
-  deals       Deal[]   @relation("PaymentDeals")
+  paymentID Int    @id @default(autoincrement())
+  userID    Int
+  amount    Float
+  currency  String
+  status    String
+  user      User   @relation("UserPayments", fields: [userID], references: [userID])
+  deals     Deal[] @relation("PaymentDeals")
 }
 
 model Notification {
@@ -86,29 +89,27 @@ model Notification {
   deal           Deal?    @relation(fields: [dealID], references: [dealID])
 }
 
-
-
 model Deal {
-  dealID      Int      @id @default(autoincrement())
-  problemID   Int      @unique
+  dealID             Int              @id @default(autoincrement())
+  problemID          Int              @unique
   solutionProviderID Int
-  status      String
-  communication Message[]
-  notifications Notification[]
-  problem     Problem  @relation(fields: [problemID], references: [problemID])
-  solutionProvider SolutionProvider @relation(fields: [solutionProviderID], references: [providerID])
-  payments    Payment[] @relation("PaymentDeals")
-  users       User[]    @relation("UserDeals")
+  status             String
+  communication      Message[]
+  notifications      Notification[]
+  problem            Problem          @relation(fields: [problemID], references: [problemID])
+  solutionProvider   SolutionProvider @relation(fields: [solutionProviderID], references: [providerID])
+  payments           Payment[]        @relation("PaymentDeals")
+  users              User[]           @relation("UserDeals")
 }
 
 model Message {
-  messageID   Int      @id @default(autoincrement())
-  senderID    Int
-  receiverID  Int
-  content     String
-  timestamp   DateTime @default(now())
-  sender      User     @relation("UserMessages", fields: [senderID], references: [userID])
-  receiver    SolutionProvider @relation("ProviderMessages", fields: [receiverID], references: [providerID])
-  dealID      Int?
-  deal        Deal?    @relation(fields: [dealID], references: [dealID])
+  messageID  Int              @id @default(autoincrement())
+  senderID   Int
+  receiverID Int
+  content    String
+  timestamp  DateTime         @default(now())
+  sender     User             @relation("UserMessages", fields: [senderID], references: [userID])
+  receiver   SolutionProvider @relation("ProviderMessages", fields: [receiverID], references: [providerID])
+  dealID     Int?
+  deal       Deal?            @relation(fields: [dealID], references: [dealID])
 }

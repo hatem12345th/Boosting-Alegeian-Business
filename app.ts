@@ -4,12 +4,12 @@ import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
 import session from "express-session";
 import passport from "./passport";
-import { hashPassword } from "./bcrypt";
-import hello from "./routers/hello";
-import logout from "./routers/logout";
-import create from "./routers/create";
-import login from "./routers/login";
-import home from "./routers/home";
+import { hashPassword } from "./utilities/bcrypt";
+import register from "./routers/users/register";
+import login from "./routers/users/login";
+import profile from "./routers/users/profile";
+import logout from "./routers/users/logout";
+
 
 dotenv.config();
 
@@ -32,25 +32,17 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use("/hello", hello);
+app.use("/register", register);
+app.use("/users", login);
+app.use("/profile/:id", profile);
 app.use("/logout", logout);
-app.use("/create", create);
-app.use("/login", login);
-app.use("/home", home);
 
 
 
-app.get("/home", (req: Request, res: Response) => {
-  if (req.isAuthenticated()) {
-    res.send("Success! You are logged in.");
-  } else {
-    res.redirect("/login");
-  }
-});
 
 
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+  console.log(`Server running on http:localhost:${PORT}`);
+});   
