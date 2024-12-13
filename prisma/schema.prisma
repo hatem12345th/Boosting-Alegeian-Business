@@ -13,6 +13,8 @@ model user {
   email         String         @unique
   role          String
   passwordHash  String
+  resetToken    String?        // Reset token
+  resetTokenExpiry DateTime?   // Expiration time for reset token
   problems      Problem[]      @relation("UserProblems")
   proposals     Proposal[]     @relation("UserProposals")
   payments      Payment[]      @relation("UserPayments")
@@ -20,6 +22,7 @@ model user {
   messages      Message[]      @relation("UserMessages")
   deals         Deal[]         @relation("UserDeals")
 }
+
 
 model Problem {
   problemID     Int            @id @default(autoincrement())

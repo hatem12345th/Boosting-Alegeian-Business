@@ -2,7 +2,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { PrismaClient } from "@prisma/client";
 import { comparePassword } from "./utilities/bcrypt";
-import { user } from "@prisma/client";
+ 
 
 const prisma = new PrismaClient();
 
