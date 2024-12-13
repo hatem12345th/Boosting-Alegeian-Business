@@ -7,9 +7,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model user {
   userID        Int            @id @default(autoincrement())
-  username      String         @unique
+  username      String         
   email         String         @unique
   role          String
   passwordHash  String
@@ -30,7 +30,7 @@ model Problem {
   status        String
   attachments   String? // File paths or URLs to attachments
   userID        Int
-  user          User           @relation("UserProblems", fields: [userID], references: [userID])
+  user          user           @relation("UserProblems", fields: [userID], references: [userID])
   proposals     Proposal[]
   notifications Notification[]
   dealID        Int?
@@ -61,7 +61,7 @@ model Proposal {
   problemID          Int              @unique
   details            String
   financialOffer     Float
-  user               User             @relation("UserProposals", fields: [userID], references: [userID])
+  user               user             @relation("UserProposals", fields: [userID], references: [userID])
   problem            Problem          @relation(fields: [problemID], references: [problemID])
   solutionProviderID Int
   solutionProvider   SolutionProvider @relation("ProviderProposals", fields: [solutionProviderID], references: [providerID])
@@ -73,7 +73,7 @@ model Payment {
   amount    Float
   currency  String
   status    String
-  user      User   @relation("UserPayments", fields: [userID], references: [userID])
+  user      user   @relation("UserPayments", fields: [userID], references: [userID])
   deals     Deal[] @relation("PaymentDeals")
 }
 
@@ -82,7 +82,7 @@ model Notification {
   message        String
   date           DateTime @default(now())
   userID         Int
-  user           User     @relation(fields: [userID], references: [userID])
+  user           user     @relation(fields: [userID], references: [userID])
   problemID      Int?
   problem        Problem? @relation(fields: [problemID], references: [problemID])
   dealID         Int?
@@ -99,7 +99,7 @@ model Deal {
   problem            Problem          @relation(fields: [problemID], references: [problemID])
   solutionProvider   SolutionProvider @relation(fields: [solutionProviderID], references: [providerID])
   payments           Payment[]        @relation("PaymentDeals")
-  users              User[]           @relation("UserDeals")
+  users              user[]           @relation("UserDeals")
 }
 
 model Message {
@@ -108,7 +108,7 @@ model Message {
   receiverID Int
   content    String
   timestamp  DateTime         @default(now())
-  sender     User             @relation("UserMessages", fields: [senderID], references: [userID])
+  sender     user             @relation("UserMessages", fields: [senderID], references: [userID])
   receiver   SolutionProvider @relation("ProviderMessages", fields: [receiverID], references: [providerID])
   dealID     Int?
   deal       Deal?            @relation(fields: [dealID], references: [dealID])
