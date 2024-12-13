@@ -5,7 +5,10 @@ const prisma = new PrismaClient();
 const router = Router();
 
 router.get("/profile/:id", async (req:any, res:any) => {
-  const { id } = req.params;
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+  else{ const { id } = req.params;
 
   try {
     const user = await prisma.user.findUnique({
@@ -18,7 +21,8 @@ router.get("/profile/:id", async (req:any, res:any) => {
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: "Error retrieving user profile", error });
-  }
+  }}
+ 
 });
 
 export default router;
