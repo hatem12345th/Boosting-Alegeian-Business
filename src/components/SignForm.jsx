@@ -2,13 +2,16 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { VerifyEmail } from './VerifyEmail'
+import { useAuthStore } from '@/zustand/AuthStore'
+
 
 export const SignupForm = () => {
   const [tab,setTab] = useState(false);
+  const {signup,error,isLoading} = useAuthStore();
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [formData, setFormData] = useState({
@@ -27,11 +30,20 @@ export const SignupForm = () => {
     }))
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if(formData.password == formData.confirmPassword ) 
+       { 
+        const username =  formData.lastName+formData.firstName ;
+    const { confirmPassword,lastName,firstName, ...formDataWithoutConfirmPassword } = formData;
+        await signup(formData.email,formData.password,username);
+        setTab(!tab);
+} 
+        else{
+        return alert("password not eq")
 
-    setTab(!tab);
+    }
+   
 
 
   }
@@ -179,12 +191,14 @@ export const SignupForm = () => {
                 </span>
               </Button>
             </div>
-          </div>
+          </div>    
 
-          <Button type="submit" className="w-full bg-black text-white hover:bg-black/90">
-            Sign up
-          </Button>
+          {isLoading ?  <Button disabled className="w-full bg-black text-white hover:bg-black/90">
+      <Loader2 className="animate-spin" />
+      Please wait
+    </Button>: <Button type="submit" className="w-full bg-black text-white hover:bg-black/90"> Sign up  </Button>}
         </form>
+        {error && <p className='text-red-500 font-semibold mt-2'>{error}</p>}
 
         <p className="text-center text-sm text-muted-foreground">
           By clicking sign up, you agree to our{' '}

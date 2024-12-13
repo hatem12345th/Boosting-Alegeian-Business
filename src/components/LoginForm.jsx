@@ -5,15 +5,26 @@ import Link from 'next/link'
 import { Eye, EyeOff } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useAuthStore } from '@/zustand/AuthStore'
+import { Loader2 } from "lucide-react"
+import { redirect } from 'next/navigation'
+import toast from "react-hot-toast";
+
 
 export default function LoginForm() {
+  const {login,error,isLoading} = useAuthStore()
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Handle form submission
+    await login(email,password);
+    toast.success("Sign in verified successfully");
+    redirect("/");
+ 
+ 
+ 
   }
 
   return (
@@ -91,10 +102,13 @@ export default function LoginForm() {
             </div>
           </div>
 
-          <Button type="submit" className="w-full bg-black text-white hover:bg-black/90">
-            Sign In
-          </Button>
-
+          
+          {isLoading ?  <Button disabled className="w-full bg-black text-white hover:bg-black/90">
+      <Loader2 className="animate-spin" />
+      Please wait
+    </Button>: <Button type="submit" className="w-full bg-black text-white hover:bg-black/90"> Sign in  </Button>}
+         
+          {error && <p className='text-red-500 font-semibold mt-2'>{error}</p>}
           <div className="text-center">
             <Link 
               href="/forgot-password" 

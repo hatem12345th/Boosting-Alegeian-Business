@@ -59,7 +59,6 @@ export const VerifyEmail = () => {
         <InputOTPSlot index={5} />
       </InputOTPGroup>
     </InputOTP>
-    <span className='mt-5'> Email Verification </span>
               
             </label>
            
