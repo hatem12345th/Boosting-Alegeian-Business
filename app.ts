@@ -46,7 +46,6 @@ app.use("/users", vuprofile);
 app.use("/users", logout);
 app.use("/users", uprofile);
 app.use("/users", resetpassword);
-app.use("/users", verifyemail);
 app.use("/problem", problemRoutes);
 app.use("/providers", solutionProviderRoutes);
 app.use("/proposal", proposalRoutes);
