@@ -37,7 +37,7 @@ export default function LoginForm() {
             
           </Link>
         </div>
-      <div className="w-full max-w-[500px] space-y-6">
+      <div className="w-full sm:max-w-[500px]  space-y-6">
        
 
         <div className="space-y-2 text-center">

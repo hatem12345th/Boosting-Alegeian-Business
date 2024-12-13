@@ -84,3 +84,16 @@ body {
   background-position: center;
 
 }
+
+.X{
+  background: linear-gradient(90deg, #000000 0%, #434343 100%);
+
+}
+.Y{
+  background: linear-gradient(90deg, #0F2027 0%, #203A43 50%, #2C5364 100%);
+
+}
+
+.Inn{
+  background: var(--color-muted-50, #F4F4F580);
+}

@@ -13,6 +13,9 @@ export default {
 				1:'#18181B',
 				2:'#09090B',	
 			},
+			light:{
+				1:"#f5f5f5",
+			},
 			'ring-80': 'var(--color-ring-80, #18181BCC)',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
