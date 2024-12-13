@@ -1,86 +1,78 @@
-"use client"
+"use client";
 
-import { usePathname } from 'next/navigation'
-import { navbarLinks } from '@/constants'
-import Image from 'next/image'
-import Link from 'next/link'
+import { usePathname } from "next/navigation";
+import { navbarLinks } from "@/constants";
+import Image from "next/image";
+import Link from "next/link";
 
-import { Input } from './ui/input'
-import { Button } from "@/components/ui/button"
+import { Input } from "./ui/input";
+import { Button } from "@/components/ui/button";
 
-import { Bell, Mail, Search, UserCircle } from 'lucide-react'
+import { Bell, Mail, Search, UserCircle } from "lucide-react";
 
 export const Navbar = () => {
-  const pathname = usePathname()
-  
+  const pathname = usePathname();
+
   return (
-  <nav className='w-full h-16 bg-white items-center  flex'>
-      <div className='px-4 flex gap-16 justify-center items-center' >
-          <Image 
-          src={"/Main.png"} 
+    <nav className="w-full px-6 sm:px-10 lg:px-32 h-16  bg-white items-center flex">
+      <div className="flex justify-between items-center w-full">
+        {/* Logo Section */}
+        <Image
+          src={"/Main.png"}
           width={172.38}
           height={40}
-/>
-    <ul className='gap-8 w-80 px-20  transition-all duration-200 flex items-center'>
-        {navbarLinks.map((item,index) => (
-          <Link 
-            href={`${item.route}`}
-            key={index}
-            className={`mt-1 text-sm ${pathname === item.route ? " text-black font-black  " :"text-[#71717A] "}`}
-          >
-            {item.label}
-          </Link>
-        ) )}
-    </ul>
-        
-   
-      </div>
-      <div className="mx-auto justify-between flex items-center gap-4">
-          <form className="hidden md:block px-80 flex-1 md:flex-none">
-            <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search..."
-                className="w-[500px] pl-8 bg-white"
-              />
-            </div>
-          </form>
-          <Button
-            variant="outline"
-            size="icon"
-            className="text-black "
-          >
-            <Mail className="h-10 w-10" />
+          className="w-32 sm:w-[172.38px] h-auto"
+          alt="Logo"
+        />
+
+        {/* Navigation Links */}
+        <ul className="hidden lg:flex gap-8">
+          {navbarLinks.map((item, index) => (
+            <Link
+              href={`${item.route}`}
+              key={index}
+              className={`mt-1 text-sm ${
+                pathname === item.route
+                  ? "text-black font-black"
+                  : "text-[#71717A]"
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </ul>
+
+        {/* Buttons and Search */}
+        <div className="hidden sm:flex items-center gap-4">
+          <Button variant="outline" size="icon" className="text-black">
+            <Mail className="h-6 w-6 sm:h-8 sm:w-8" />
             <span className="sr-only">Open messages</span>
           </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="text-black"
-          >
-            <Bell className="h-10 w-10" />
+          <Button variant="outline" size="icon" className="text-black">
+            <Bell className="h-6 w-6 sm:h-8 sm:w-8" />
             <span className="sr-only">Open notifications</span>
           </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="text-black"
-          >
-            <UserCircle className="h-10 w-10" />
+          <Button variant="outline" size="icon" className="text-black">
+            <UserCircle className="h-6 w-6 sm:h-8 sm:w-8" />
             <span className="sr-only">Open user menu</span>
           </Button>
-        </div> 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</nav>
-  )
-}
+          <form className="hidden md:flex items-center">
+            <Input
+              type="text"
+              placeholder="Search"
+              className="w-40 md:w-60 lg:w-80"
+            />
+          </form>
+        </div>
+
+        {/* Mobile Menu Button (if needed) */}
+        <div className="flex lg:hidden">
+          {/* Add a menu toggle icon here for mobile */}
+          <Button variant="ghost" className="text-black">
+            <Search className="h-6 w-6" />
+          </Button>
+        </div>
+      </div>
+    </nav>
+  );
+};

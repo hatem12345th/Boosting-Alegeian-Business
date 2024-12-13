@@ -1,10 +1,8 @@
 import { AIProblemSolver } from '@/components/ai-problem-solver';
-import { FilterSidebar } from '@/components/filer-sidebar'
+import { FilterSidebar } from '@/components/filer-sidebar';
 import { ProblemCard } from '@/components/problem-card';
-import { StatesDemo } from '@/components/StatesDemo'
-import React from 'react'
-
-
+import { StatesDemo } from '@/components/StatesDemo';
+import React from 'react';
 
 const data = [
   {
@@ -54,41 +52,42 @@ const data = [
   }
 ];
 
-
-
-const Home = () => {
+const Customer = () => {
   return (
-    <main className="w-full flex flex-col md:flex-row mt-6 gap-4">
-    {/* Sidebar Section */}
-    <div className="w-full md:w-[500px]">
-      <FilterSidebar />
-    </div>
-  
-    {/* Main Content Section */}
-    <div className="w-full">
-      <AIProblemSolver />
-      <h1 className="font-semibold text-dark-2 text-xl py-6">
-        Discover Solutions
-      </h1>
-      {data?.map((item, index) => (
-        <ProblemCard
-          key={index} // Added a key for React lists
-          title={item.title}
-          description={item.description}
-          priceRange={item.priceRange}
-          company={item.company}
-          postedTime={item.postedTime}
-        />
-      ))}
-    </div>
-  
-    {/* States Section */}
-    <div className="w-full md:w-[350px] md:justify-end mr-10">
-      <StatesDemo />
-    </div>
-  </main>
-  
-  )
-}
+    <main className="w-full flex flex-col items-center p-6 ">
+      {/* Main Header */}
+      <h1 className="font-semibold text-primary text-2xl py-4">Discover Solutions</h1>
 
-export default Home
+      {/* Cards Container */}
+      <div className="flex flex-wrap gap-6 justify-center">
+        {data?.map((item, index) => (
+          <div
+            key={index}
+            className="flex flex-col bg-card shadow-lg rounded-lg p-4 w-[300px] hover:shadow-xl transition-shadow duration-200"
+          >
+            <h2 className="font-semibold text-lg mb-2 text-card-foreground">{item.title}</h2>
+            <p className="text-muted-foreground text-sm mb-4">{item.description}</p>
+            <p className=" font-medium mb-2">{item.priceRange}</p>
+            <p className="text-muted-foreground text-xs mb-4">Posted by {item.company} - {item.postedTime}</p>
+            <div className="flex justify-between">
+              <button
+               
+                className="px-4 py-2 bg-primary text-primary-foreground text-sm rounded hover:bg-primary-hover"
+              >
+                View Details
+              </button>
+              <button
+           
+                className="px-4 py-2 bg-secondary text-secondary-foreground text-sm rounded hover:bg-secondary-hover"
+              >
+                Contact
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </main>
+  );
+};
+
+export default Customer;

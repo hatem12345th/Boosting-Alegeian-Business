@@ -6,17 +6,14 @@ export const navbarLinks = [
   
     {
 
-      route: '/Customers',
-      label: 'Customers',
+      route: '/problems',
+      label: 'Problems',
     },
-    {
-      route: '/Products',
-      label: 'Products',
-    },
+
     {
 
-      route: '/Settings',
-      label: 'Settings',
+      route: '/deals',
+      label: 'Deals',
     },
    
   ];

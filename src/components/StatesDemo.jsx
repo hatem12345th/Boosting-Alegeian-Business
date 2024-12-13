@@ -4,7 +4,7 @@ import { FileText, MessageSquare, Briefcase, Wallet } from 'lucide-react'
 
 export const StatesDemo = () => {
   return (
-    <div className="w-[300px] mx-atuo space-y-4 px-4">
+    <div className="w-full mx-4 p-4  space-y-4 ">
     <StatsCard
       title="Budget Utilized"
       value="12,234.00 DZD"
