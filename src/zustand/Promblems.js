@@ -4,9 +4,9 @@ import toast from "react-hot-toast";
 
 const API_URL =  "http://localhost:5000/api/posts";
 
-export const useProductStore = create((set) => ({
+export const usePrblemStore = create((set) => ({
 	loading: false,
-    createProduct: async (productData,setData,data) => {
+    createProblem: async (productData,setData,data) => {
 		set({ loading: true });
 		try {
 			const res = await axios.post(`${API_URL}/create`, productData);
@@ -16,7 +16,7 @@ export const useProductStore = create((set) => ({
 			set({ loading: false });
 		}
 	},
-	getProducts: async (data,setData) => {
+	getProblems: async (data,setData) => {
 		set({loading:true});
 		try {
 			const response = await axios.get(`${API_URL}/`);
