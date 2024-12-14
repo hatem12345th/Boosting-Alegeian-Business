@@ -21,13 +21,15 @@ import { Details } from "./Details";
 
 
 export const  ProblemCard = ({
+  item,
   title,
   description,
   priceRange,
   company,
   postedTime,
   onViewDetails,
-  onContact
+  onContact,
+  website
 }) =>  {
   const [tab,setTab] = useState(false)
 
@@ -49,7 +51,9 @@ export const  ProblemCard = ({
             <div className="flex items-center justify-between text-sm text-muted-foreground">
               <p>Offered by: {company}</p>
               <p>Posted {postedTime}</p>
+              
             </div>
+            <a href={`${website}`} target="_blank" rel="noopener noreferrer" className="text-blue-600">  Link  </a>
             <div className="flex items-center gap-4">
           
             <Dialog>
@@ -64,8 +68,8 @@ export const  ProblemCard = ({
                 View details
               </Button>
               </DialogTrigger>
-                <Details    />
-              </Dialog>
+                <Details item={item} title={title} description={description} priceRange={priceRange} company={company} postedTime={postedTime}  />
+              </Dialog   >
               <Button 
                 className="flex-1 bg-black text-white hover:bg-black/90"
                 onClick={onContact}

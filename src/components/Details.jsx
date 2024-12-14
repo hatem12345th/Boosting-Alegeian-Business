@@ -56,12 +56,13 @@ const keyFeatures = [
     },]
 
 export const Details = ({
+  id,
   title,
   description,
   priceRange,
   company,
   postedTime,
- 
+ item,
 }) => {
     const [tab,setTab] = useState(false)
 
@@ -118,9 +119,9 @@ export const Details = ({
 
 
                       <h1 className="font-medium text-xl py-6 leading-3 text-dark-2">Solution discription</h1>
-             <p className="font-normal text-lg leading-7 text-[#71717A] ">Our small business requires a customized CRM system to help us manage customer relationships, track sales activities, 
-              and analyze performance data. The system must be user-friendly, scalable, and integrate with existing tools like email and accounting software. 
-              Key features include contact management, sales pipeline tracking, and reporting dashboards.</p>
+             <p className="font-normal text-xs leading-7 text-[#71717A] ">
+              {description}
+             </p>
 
               <h1 className="font-medium text-xl  py-6 leading-3 text-dark-2">Key Features</h1>
                         <ul className="px-4">
