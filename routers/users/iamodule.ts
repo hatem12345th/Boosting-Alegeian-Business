@@ -9,7 +9,7 @@ router.post("/iamodule", async (req, res, next) => {
     const { query } = req.body;
 
     // Send a POST request to the Flask API
-    const response = await axios.post('http://localhost:5000/recommend', { query });
+    const response = await axios.post('http://localhost:8080/recommend', { query });
 
     // Handle the response from the Flask API
     res.json(response.data);
