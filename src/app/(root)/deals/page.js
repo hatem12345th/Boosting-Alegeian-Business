@@ -7,6 +7,8 @@ import {  Grid3x3, LayoutGrid, Wallet } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 
 import { useState } from 'react';
+import PaymentModal from "@/components/payments";
+import ProposalDetails from "@/components/ProposalDetails";
 
 const datas = [
   {
@@ -76,6 +78,14 @@ const datas = [
 
 const Deals = () => {
   const [tab,setTab] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [opens,setOpens] = useState(false);
+  const handleOpenChange = (isOpen) => {
+    setOpen(isOpen);
+  };
+  const handleOpenChanges = (isOpen) => {
+    setOpens(isOpen)
+  };
   const [data,setData] = useState(datas);
   const handleAccept = (index) => {
     const updatedData = [...data];
@@ -122,8 +132,8 @@ const Deals = () => {
           </div>
           <Button
 variant="secondary"            
-            onClick={() => {}}
             className="text-sm"
+            onClick={() => setOpens(!opens)}
           >
             View Details
           </Button>
@@ -146,7 +156,8 @@ variant="secondary"
       </CardContent>
       <CardFooter className="flex justify-between gap-4 pt-0">
         <div className="text-sm text-muted-foreground">{item.timeAgo}</div>
-       {item.accepted ? <> <Button className="w-full"> <Wallet /> Pay now</Button></>: <div className="flex gap-2 flex-1">
+       {item.accepted ? <> <Button className="w-full"             onClick={() => {setOpen(true)}}
+       > <Wallet /> Pay now</Button></>: <div className="flex gap-2 flex-1">
           <Button
             variant="destructive"
             className="flex-1"
@@ -167,7 +178,8 @@ variant="secondary"
     </Card>
   ))}
 </div>
-
+  <ProposalDetails open={opens} onOpenChange={handleOpenChanges}   />
+  <PaymentModal  open={open} onOpenChange={handleOpenChange} />
     </main>
   );
 };

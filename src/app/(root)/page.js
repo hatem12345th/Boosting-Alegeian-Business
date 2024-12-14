@@ -1,8 +1,9 @@
 import { AIProblemSolver } from '@/components/ai-problem-solver';
 import { FilterSidebar } from '@/components/filer-sidebar'
+import LoadingSpinner from '@/components/Loader';
 import { ProblemCard } from '@/components/problem-card';
 import { StatesDemo } from '@/components/StatesDemo'
-import React from 'react'
+
 
 
 
@@ -57,6 +58,10 @@ const data = [
 
 
 const Home = () => {
+
+ 
+
+
   return (
     <main className="w-full flex flex-col md:flex-row mt-6 gap-4">
     {/* Sidebar Section */}

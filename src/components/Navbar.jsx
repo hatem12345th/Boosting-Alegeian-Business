@@ -1,5 +1,14 @@
 "use client";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Bookmark, LogOut, Settings } from 'lucide-react'
 import { usePathname } from "next/navigation";
 import { navbarLinks } from "@/constants";
 import Image from "next/image";
@@ -10,9 +19,14 @@ import { Button } from "@/components/ui/button";
 
 import { Bell, Mail, Search, UserCircle } from "lucide-react";
 
+const name = "Problem Poster"
+const email = "m@example.como"
+const initial = "P";
+
+
 export const Navbar = () => {
   const pathname = usePathname();
-
+  
   return (
     <nav className="w-full px-6 sm:px-10 lg:px-32 h-16  bg-white items-center flex">
       <div className="flex justify-between items-center w-full">
@@ -48,14 +62,55 @@ export const Navbar = () => {
             <Mail className="h-6 w-6 sm:h-8 sm:w-8" />
             <span className="sr-only">Open messages</span>
           </Button>
-          <Button variant="outline" size="icon" className="text-black">
+          <Button variant="outline" size="icon"  className={`mt-1 text-sm ${
+                pathname === "/notification"
+                  ? "text-white bg-black font-black"
+                  : "text-black"
+              }`}>
+            <Link href={"/notification"} >
             <Bell className="h-6 w-6 sm:h-8 sm:w-8" />
             <span className="sr-only">Open notifications</span>
-          </Button>
-          <Button variant="outline" size="icon" className="text-black">
-            <UserCircle className="h-6 w-6 sm:h-8 sm:w-8" />
-            <span className="sr-only">Open user menu</span>
-          </Button>
+            </Link>
+           
+          </Button> 
+          <DropdownMenu>
+      <DropdownMenuTrigger className="outline-none">
+        <Avatar>
+          <AvatarFallback className="bg-gray-100 text-gray-900">
+            {initial}
+          </AvatarFallback>
+        </Avatar>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-56">
+        <div className="px-2 py-1.5 space-y-1">
+          <p className="text-sm font-medium">{name}</p>
+          <p className="text-xs text-muted-foreground">{email}</p>
+        </div>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => {}} className="gap-2 cursor-pointer">
+
+          <Bookmark className="w-4 h-4" />
+          <span>Saves</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => {}} className="gap-2 cursor-pointer">
+        <Link href={"/settings"} className="flex gap-2" >
+          <Settings className="w-4 h-4" />
+          <span>Settings</span>
+          </Link>
+
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem 
+          onClick={() => {localStorage.removeItem("user")}} 
+          className="gap-2 cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50"
+        >
+          <LogOut className="w-4 h-4" />
+          <span >Logout</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+
+          
           <form className="hidden md:flex items-center">
             <Input
               type="text"

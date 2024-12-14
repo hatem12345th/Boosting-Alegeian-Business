@@ -1,6 +1,7 @@
 "use client"
 
 
+import AddProblemForm from '@/components/add-problem-form';
 import { Button } from '@/components/ui/button';
 import {  CirclePlus, Grid3x3, LayoutGrid } from 'lucide-react';
 import { useState } from 'react';
@@ -55,7 +56,7 @@ const data = [
 
 const Customer = () => {
   const [tab,setTab] = useState(false);
-  
+  const [open,setOpen] = useState(false);
  
  
   return (
@@ -67,8 +68,8 @@ const Customer = () => {
         <span className='flex gap-1'>
         {!tab ? ( <Button variant="outline"  onClick={() => setTab(!tab)}>    <Grid3x3 />  </Button>) :( <Button  onClick={() => setTab(!tab)}>      <Grid3x3 />  </Button> ) }  
         {tab ? ( <Button variant="outline" onClick={() => setTab(!tab)} >    <LayoutGrid />  </Button>) :( <Button onClick={() => setTab(!tab)} >    <LayoutGrid /> </Button> ) } 
-        <Button className="">  <CirclePlus /> New Problem </Button>
-
+        <Button className="" onClick={() => {setOpen(!open)}} >  <CirclePlus /> New Problem </Button>
+      <AddProblemForm  open={open} onOpenChange={setOpen} />
         </span>
 
 
