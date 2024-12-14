@@ -42,9 +42,9 @@ export const SignupForm = () => {
     }))
   }
   const handleClick = async(e) => {
-    e.preventDefault();
-    await uprofile(selectedRole,user.userID);
-    toast.success("User was 100% created");
+   // e.preventDefault();
+  //  await uprofile(selectedRole,user.userID);
+   // toast.success("User was 100% created");
     redirect('/welcome');
   }
 
