@@ -5,13 +5,25 @@ import Link from 'next/link'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { VerifyEmail } from './VerifyEmail'
 import { useAuthStore } from '@/zustand/AuthStore'
+ 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import toast from 'react-hot-toast'
+import { redirect } from 'next/navigation'
 
 
 export const SignupForm = () => {
-  const [tab,setTab] = useState(false);
-  const {signup,error,isLoading} = useAuthStore();
+  const [tab,setTab] = useState(true);
+  const [selectedRole, setSelectedRole] = useState('');
+  const {uprofile,signup,user,error,isLoading} = useAuthStore();
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [formData, setFormData] = useState({
@@ -29,6 +41,13 @@ export const SignupForm = () => {
       [name]: value
     }))
   }
+  const handleClick = async(e) => {
+    e.preventDefault();
+    await uprofile(selectedRole,user.userID);
+    toast.success("User was 100% created");
+    redirect('/welcome');
+  }
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +55,8 @@ export const SignupForm = () => {
        { 
         const username =  formData.lastName+formData.firstName ;
     const { confirmPassword,lastName,firstName, ...formDataWithoutConfirmPassword } = formData;
-        await signup(formData.email,formData.password,username);
+        await signup(formData.email,formData.password,username,selectedRole);
+       toast.success("User was 50% created")
         setTab(!tab);
 } 
         else{
@@ -50,8 +70,7 @@ export const SignupForm = () => {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
-            {tab ?   <div className="w-full max-w-[500px] space-y-6">
-        <div className="flex justify-end  absolute top-2 h-9 right-4 p-8  left-4 gap-4 ">
+            <div className="flex justify-end  absolute top-2 h-9 right-4 p-8  left-4 gap-4 ">
         <Link 
             href="/sign-in" 
           >
@@ -59,6 +78,8 @@ export const SignupForm = () => {
             
           </Link>
         </div>
+            {tab ?   <div className="w-full max-w-[500px] space-y-6">
+      
 
         <div className="space-y-2">
           <h1 className="text-2xl font-semibold tracking-tight">
@@ -210,7 +231,39 @@ export const SignupForm = () => {
             Privacy Policy
           </Link>
         </p>
-      </div> :  <VerifyEmail  />}   
+      </div> :  <>
+      <div className="w-full max-w-md mx-auto p-6 space-y-6">
+      <div className="space-y-2 text-center">
+        <h1 className="text-2xl font-semibold tracking-tight">Select Your Role</h1>
+        <p className="text-sm text-muted-foreground">
+          Pick the role that aligns with your goals and start connecting with businesses today.
+        </p>
+      </div>
+              <form onSubmit={handleSubmit} className="space-y-4">
+
+      <div className="space-y-4">
+        <Select onValueChange={setSelectedRole}>
+          <SelectTrigger>
+            <SelectValue placeholder="Empty" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="problem-poster">Problem Poster</SelectItem>
+            <SelectItem value="solution-provider">Solution Provider</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Button 
+          className="w-full" 
+          disabled={!selectedRole}
+          onClick={handleClick}
+        >
+          Continue
+        </Button>
+      </div>
+      </form>
+    </div>
+      
+      </>}   
 
      
     </div>

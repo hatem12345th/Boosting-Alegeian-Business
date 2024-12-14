@@ -12,11 +12,14 @@ import {
 
 
 
-export const VerifyEmail = () => {
+export const VerifyEmail = ({code}) => {
   const [value, setValue] = useState("")
+  const [tab,setTab] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(value)
+    if (code == value) {
+        setTab(!tab);
+    }
     // Handle verification submission
   }
   return (
@@ -29,8 +32,42 @@ export const VerifyEmail = () => {
             
           </Link>
         </div>
+        { tab ?  
+          <>
+          
+          <div className="space-y-2">
+          <h1 className="text-2xl font-semibold tracking-tight">
+            Change Your Password 
+          </h1>
+          <p className="text-sm text-muted-foreground">
+          Set Your New Password to Finish the Recovery Process          </p>
+        </div>
 
-        <div className="space-y-2">
+        <form onSubmit={handleSubmit} className="space-y-4 mx-auto">
+          <div className="space-y-3">
+            <label 
+              htmlFor="otp" 
+              className="text-xl w-full font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              <Input
+        id="email"
+        type="email"
+        placeholder="m@example.com"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
+            </label>
+           
+          </div>
+
+          <Button type="submit" className="w-full bg-black text-white hover:bg-black/90">
+            Change password
+          </Button>
+        </form>
+          
+          </>
+        : <><div className="space-y-2">
           <h1 className="text-2xl font-semibold tracking-tight">
             Verify Your Email Address
           </h1>
@@ -67,7 +104,8 @@ export const VerifyEmail = () => {
           <Button type="submit" className="w-full bg-black text-white hover:bg-black/90">
             Verify
           </Button>
-        </form>
+        </form></> }
+        
       </div>
     
   )

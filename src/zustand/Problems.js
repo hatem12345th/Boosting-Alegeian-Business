@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 const API_URL =  "http://localhost:5000/api/posts";
 
-export const usePrblemStore = create((set) => ({
+export const useProblemStore = create((set) => ({
 	loading: false,
     createProblem: async (productData,setData,data) => {
 		set({ loading: true });

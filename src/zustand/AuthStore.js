@@ -16,7 +16,23 @@ export const useAuthStore = create((set) => ({
 	isCheckingAuth: true,
 	message: null,
 
-	signup: async (email, password, username) => {
+
+	uprofile: async (role,id) => {
+		set({ isLoading: true, error: null });
+		try {
+			const response = await axios.put(`${API_URL}/profile/${id}`, { role });
+			localStorage.setItem('user',JSON.stringify(response.data.user))			
+			set({ user: response.data.user, isAuthenticated: true, isLoading: false });
+		} catch (error) {
+			set({ error: error.response.data.message || "Error signing up", isLoading: false });
+			throw error;
+		}
+
+	},
+
+
+
+	signup: async (email, password, username,role) => {
 		set({ isLoading: true, error: null });
 		try {
 			const response = await axios.post(`${API_URL}/register`, { email, password, username,role:"user" });
@@ -48,6 +64,8 @@ export const useAuthStore = create((set) => ({
 		}
 	},
 
+
+
 	logout: async () => {
 		set({ isLoading: true, error: null });
 		try {
@@ -59,22 +77,11 @@ export const useAuthStore = create((set) => ({
 			throw error;
 		}
 	},
-	verifyEmail: async (code) => {
-		set({ isLoading: true, error: null });
-		try {
-			const response = await axios.post(`${API_URL}/verify-email`, { code });
-			set({ user: response.data.user, isAuthenticated: true, isLoading: false });
-			return response.data;
-		} catch (error) {
-			set({ error: error.response.data.message || "Error verifying email", isLoading: false });
-			throw error;
-		}
-	},
 	checkAuth: async () => {
 		set({ isCheckingAuth: true, error: null });
 		try {
 			//const response = await axios.get(`${API_URL}/check-auth`);
-			const response = JSON.parse(localStorage.getItem('e-commerce-user'))
+			const response = JSON.parse(localStorage.getItem('user'))
 			if (!response)
 			set({ user: response, isAuthenticated: false, isCheckingAuth: false });
 			else
@@ -83,6 +90,8 @@ export const useAuthStore = create((set) => ({
 			set({ error: null, isCheckingAuth: false, isAuthenticated: false });
 		}
 	},
+	
+	
   /* 
 forgotPassword: async (email) => {
 		set({ isLoading: true, error: null });
